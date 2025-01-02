@@ -48,7 +48,7 @@ function updatePhoto() {
     photoIndex = 250;
   }
 
-  const filename = "img/France2022-" + photoIndex + ".jpg";
+  const filename = "img/France2024-" + photoIndex + ".jpg";
 
   var photo = document.getElementById("photo");
   photo.onload = () => photoLoaded();
@@ -65,7 +65,7 @@ function updateCount() {
 }
 
 function updateCaption() {
-  var currPhoto = "France2022-" + photoIndex + ".jpg";
+  var currPhoto = "France2024-" + photoIndex + ".jpg";
   var caption = captions[currPhoto].caption;
 
   document.getElementById("caption").innerHTML = caption;
