@@ -1,4 +1,8 @@
+const numPhotos = 6;
 var photoIndex = 1;
+
+var prevImage = null;
+var nextImage = null;
 
 window.addEventListener(
   "keydown",
@@ -21,43 +25,65 @@ document.addEventListener("touchmove", handleTouchMove, false);
 
 function startup() {
   if (localStorage.getItem("photoIndex")) {
-    photoIndex = parseInt(localStorage.getItem("photoIndex"), 10);
+    photoIndex = parseInt(localStorage.getItem("photoIndex"));
   }
 
-  updatePhoto();
+  updatePhoto(false, false);
 }
 
 function nextPhoto() {
   photoIndex += 1;
   localStorage.setItem("photoIndex", photoIndex);
 
-  updatePhoto();
+  updatePhoto(false, true);
 }
 
 function prevPhoto() {
   photoIndex -= 1;
   localStorage.setItem("photoIndex", photoIndex);
 
-  updatePhoto();
+  updatePhoto(true, false);
 }
 
-function updatePhoto() {
-  if (photoIndex > 250) {
+function updatePhoto(usePrevImage, useNextImage) {
+  if (photoIndex > numPhotos) {
     photoIndex = 1;
   } else if (photoIndex < 1) {
-    photoIndex = 250;
+    photoIndex = numPhotos;
   }
 
   const filename = "img/France2024-" + photoIndex + ".jpg";
 
   var photo = document.getElementById("photo");
   photo.onload = () => photoLoaded();
-  photo.setAttribute("src", filename);
+
+  if (usePrevImage && !useNextImage && prevImage) {
+    photo.setAttribute("src", prevImage.src);
+  } else if (!usePrevImage && useNextImage && nextImage) {
+    photo.setAttribute("src", nextImage.src);
+  } else {
+    photo.setAttribute("src", filename);
+  }
 }
 
 function photoLoaded() {
   updateCount();
   updateCaption();
+  
+  prevImage = preload(photoIndex - 1);
+  nextImage = preload(photoIndex + 1);
+}
+
+function preload(index) {
+  if (index > numPhotos) {
+    index = 1;
+  } else if (index < 1) {
+    index = numPhotos;
+  }
+
+  img = new Image();
+  img.src = "img/France2024-" + index + ".jpg";
+  return img;
 }
 
 function updateCount() {
@@ -66,9 +92,14 @@ function updateCount() {
 
 function updateCaption() {
   var currPhoto = "France2024-" + photoIndex + ".jpg";
-  var caption = captions[currPhoto].caption;
+  var json = captions[currPhoto];
+  if (json) {
+    var caption = captions[currPhoto].caption;
 
-  document.getElementById("caption").innerHTML = caption;
+    document.getElementById("caption").innerHTML = caption;
+  } else {
+    document.getElementById("caption").innerHTML = '';
+  }
 }
 
 function keyPressed(e) {
