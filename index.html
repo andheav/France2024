@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>France 2022</title>
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <script src="js/captions.js"></script>
+    <script src="js/funcs.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="title-container">
+        <h1 id="title">France 2022</h1>
+      </div>
+
+      <div class="photo-container">
+        <div class="photo-vertical-container">
+          <div class="left-arrow-container">
+            <div class="arrow-vertical-container">
+              <button class="arrow" id="leftArrowButton" onclick="prevPhoto()">
+                <img
+                  src="icons/chevron-left-solid.svg"
+                  alt="Left arrow button"
+                />
+              </button>
+            </div>
+          </div>
+
+          <div class="image-container">
+            <img id="photo" src="img/France2022-1.jpg" />
+          </div>
+
+          <div class="right-arrow-container">
+            <div class="arrow-vertical-container">
+              <button class="arrow" id="rightArrowButton" onclick="nextPhoto()">
+                <img
+                  src="icons/chevron-right-solid.svg"
+                  alt="Right arrow button"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="index-container"><span id="index">1</span> of 250</div>
+
+      <div class="caption-container">
+        <div id="caption"></div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    startup();
+  </script>
+</html>
